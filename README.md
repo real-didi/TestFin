@@ -18,7 +18,7 @@ docker run --name mssql-testfin --hostname mssql-testfin -d -e "ACCEPT_EULA=Y" -
 *Написать запрос, который возвращает наименование клиентов и кол-во контактов клиентов*
 ```sql
 SELECT c.ClientName, count(cc.Id) AS ContactsCount FROM Clients c
-INNER JOIN ClientContacts cc ON cc.ClientId = c.Id 
+LEFT JOIN ClientContacts cc ON cc.ClientId = c.Id 
 GROUP BY c.Id, c.ClientName
 ```
 
