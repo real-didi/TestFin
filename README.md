@@ -34,6 +34,21 @@ HAVING count(cc.Id) > 2
 
 *Написать запрос, который возвращает интервалы для одинаковых Id.*
 ```sql
+-- Optimized 
+SELECT DISTINCT 
+	p.Id, 
+	p.Dt AS StartDate,
+	p2.Dt AS EndDate
+FROM Dates p
+CROSS APPLY
+	(
+		SELECT top(1) Id, Dt FROM Dates p2 WHERE p2.Dt > p.Dt AND p2.Id = p.Id ORDER BY p2.Id, p2.Dt
+	) p2	
+ORDER BY p.Id, p.Dt 
+
+
+
+-- Older version
 WITH DatePeriods AS (
     SELECT 
         datesLower.Id, 
